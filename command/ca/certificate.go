@@ -192,6 +192,7 @@ func certificateAction(ctx *cli.Context) error {
 
 	args := ctx.Args()
 	subject := args.Get(0)
+	subject = strings.ReplaceAll(subject, "'", "")
 	crtFile, keyFile := args.Get(1), args.Get(2)
 
 	tok := ctx.String("token")

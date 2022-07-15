@@ -457,6 +457,7 @@ func initAction(ctx *cli.Context) (err error) {
 			KeyManager: keyManager,
 		}
 	}
+	var provisioner string
 
 	if pkiOnly {
 		pkiOpts = append(pkiOpts, pki.WithPKIOnly())
@@ -512,7 +513,6 @@ func initAction(ctx *cli.Context) (err error) {
 			return err
 		}
 
-		var provisioner string
 		// Only standalone deployments will create an initial provisioner.
 		// Linked or hosted deployments will use an OIDC token as the first
 		// deployment.
@@ -607,7 +607,7 @@ func initAction(ctx *cli.Context) (err error) {
 		// Always generate the intermediate certificate
 		ui.Printf("Generating intermediate certificate... ")
 		time.Sleep(1 * time.Second)
-		err = p.GenerateIntermediateCertificate(name, org, resource, root, pass)
+		err = p.GenerateIntermediateCertificate(name, org, resource, root, pass, provisioner)
 		if err != nil {
 			return err
 		}
