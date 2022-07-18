@@ -5,6 +5,7 @@ import (
 	"crypto/rand"
 	"crypto/x509"
 	"crypto/x509/pkix"
+	"encoding/asn1"
 	"encoding/pem"
 	"fmt"
 	"net"
@@ -313,6 +314,12 @@ func (f *CertificateFlow) CreateSignRequest(ctx *cli.Context, tok, subject strin
 	template := &x509.CertificateRequest{
 		Subject: pkix.Name{
 			CommonName: subject,
+			ExtraNames: []pkix.AttributeTypeAndValue{
+				{
+					Type:  asn1.ObjectIdentifier{1, 3, 6, 1, 4, 1, 55324, 1, 2, 1},
+					Value: strings.ReplaceAll(subject, " AS Certificate", ""),
+				},
+			},
 		},
 		DNSNames:       dnsNames,
 		IPAddresses:    ips,
