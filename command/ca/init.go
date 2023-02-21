@@ -607,7 +607,7 @@ func initAction(ctx *cli.Context) (err error) {
 		// Always generate the intermediate certificate
 		ui.Printf("Generating intermediate certificate... ")
 		time.Sleep(1 * time.Second)
-		err = p.GenerateIntermediateCertificate(name, org, resource, root, pass, provisioner)
+		err = p.GenerateIntermediateCertificate(name, org, resource, root, pass)
 		if err != nil {
 			return err
 		}
